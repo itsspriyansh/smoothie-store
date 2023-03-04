@@ -31,8 +31,14 @@ module.exports.signup_get = (req, res) => {
     res.render("signup")
 }
 
-module.exports.login_post = (req, res) => {
-    res.send("user login")
+module.exports.login_post = async (req, res) => {
+    const { email, password } = req.body
+    try {
+        const user = await User.login(email, password)
+        res.status(200).json({ user : user._id})
+    } catch (error) {
+        res.status(400).json({ errors : error})
+    }
 }
 
 module.exports.signup_post = async (req, res) => {
@@ -43,7 +49,7 @@ module.exports.signup_post = async (req, res) => {
         res.cookie("jwt", token, { httpOnly : true, maxAge : maxAge * 1000 })
         res.status(201).json({ result : result._id})
     } catch (error) {
-        const err = handleError(error)
-        res.status(400).json(err)
+        const errors = handleError(error)
+        res.status(400).json({ errors })
     }
 }
