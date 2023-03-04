@@ -4,6 +4,13 @@ const cookie = require("cookie-parser")
 
 const handleError = (error) => {
     let errors = { email : "", password : "" }
+
+    if (error.message == "incorrect email") {
+        errors["email"] = "that email is not registered"
+    }
+    if (error.message == "incorrect password") {
+        errors["password"] = "incorrect password"
+    }
     if (error.message.includes("user validation failed")) {
         Object.values(error.errors).forEach(({ properties }) => {
             errors[properties.path] = properties.message
@@ -37,7 +44,8 @@ module.exports.login_post = async (req, res) => {
         const user = await User.login(email, password)
         res.status(200).json({ user : user._id})
     } catch (error) {
-        res.status(400).json({ errors : error})
+        const errors = handleError(error)
+        res.status(400).json({ errors })
     }
 }
 
