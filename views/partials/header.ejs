@@ -9,10 +9,23 @@
   <nav>
     <h1 style="display:flex; justify-content: space-between; width: 100%;">
       <a href="/">Priyansh's Smoothy Store</a>
-      <nav style="display:flex; justify-content: space-between; width: 15rem;">
-        <a href="/logout" style="font-size: medium;">Log out</a>
-        <a href="/login" style="font-size: medium;">Log in</a>
-        <a href="/signup" style="font-size: medium;">Sign up</a>
-      </nav>
+
+      <% if (user) { %>
+        
+        <div style="display:flex; justify-content: space-between; width: 20rem;">
+          <p style="font-size: 1rem; font-family: 'Courier New', Courier, monospace; font-weight: 100;"><%= user.email %></p>
+          <a href="/logout" style="font-size: medium;">Log out</a>
+        </div>
+
+      <% } else { %>
+
+        <nav style="display:flex; justify-content: space-between; width: 10rem;">
+          <a href="/login" style="font-size: medium;">Log in</a>
+          <a href="/signup" style="font-size: medium;">Sign up</a>
+        </nav>
+
+      <% } %>
+
     </h1>
   </nav>
+

@@ -2,6 +2,7 @@ const User = require("../models/User")
 const jwt = require("jsonwebtoken")
 const cookie = require("cookie-parser")
 
+
 const handleError = (error) => {
     let errors = { email : "", password : "" }
 
@@ -24,7 +25,7 @@ const handleError = (error) => {
 
 const maxAge = 3 * 24 * 60 * 60
 const createToken = (id) => {
-    return jwt.sign({ id }, "NoOneCanHoldTheirBreathForever", {
+    return jwt.sign({ id }, process.env.JWT_SIGNATURE, {
         expiresIn : maxAge
     })
 }
