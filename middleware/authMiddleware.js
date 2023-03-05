@@ -17,4 +17,15 @@ const requireAuth = (req, res, next) => {
         res.redirect("/login")
     }
 }
+
+const isLoggedIn = (req, res, next) => {
+    const token = req.cookies.jwt
+    if (token) {
+        res.redirect("/")
+    } else {
+        next()
+    }
+}
+
 module.exports = requireAuth
+module.exports = isLoggedIn
